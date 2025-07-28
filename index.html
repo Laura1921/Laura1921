@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Regalos de Samuel</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f0;
+      color: #3e3e3e;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #4a7856;
+    }
+    .intro {
+      background-color: #eaf3ea;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+    .gift-card {
+      background: #ffffff;
+      border: 2px solid #cce3d0;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gift-card.reserved {
+      background-color: #f0f0f0;
+      text-decoration: line-through;
+      color: #888;
+    }
+    button {
+      background-color: #7fbf87;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎁 Lista de Regalos de Samuel 🐘</h1>
+  <div class="intro">
+    <p>Hola, familia y amigos:</p>
+    <p>Si están leyendo este mensaje es porque son personas muy importantes para mis papitos y para mí. Sin duda, este es un momento muy especial para todos, y si Dios lo permite, ¡muy pronto podremos conocernos! 👶💛</p>
+    <p>Aquí encontrarán una lista de regalitos que servirá como guía para prepararse para mi llegada. No es algo obligatorio, solo una ayuda por si desean contribuir con algo que aún necesitamos.</p>
+    <p>💛 También pueden ser detalles de segunda mano, siempre que estén en buen estado —lo importante es el cariño con que lo den.</p>
+    <p>🎁 Y si lo desean, pueden unirse varias personas para regalar algo en conjunto, especialmente si se trata de artículos más grandes.</p>
+    <p>Cualquier detalle que quieran brindarnos —grande o pequeño, nuevo o con historia— será recibido con muchísimo amor y agradecimiento.</p>
+    <p>Si eligen algo de la lista, por favor escríbanos su nombre cuando lo seleccionen. Así evitamos repeticiones y aprovechamos cada regalo al máximo 🧡.</p>
+    <p>Con cariño,<br>Samuel</p>
+  </div>
+
+  <div id="gift-list"></div>
+
+  <script>
+    const gifts = [
+      "Cobija Térmica + Pañal Etapa 4",
+      "Cobija Ligera + Pañal Etapa 4",
+      "Cobertor + Pañal Etapa 4",
+      "Sleeping 3 - 6 meses + Pañal Etapa 4",
+      "Sleeping 6 - 12 meses + Pañal Etapa 4",
+      "Pijama enteriza 3 - 6 meses + Pañal Etapa 4",
+      "Pijama enteriza 3 - 6 meses + Pañal Etapa 4",
+      "Pijama enteriza 6 -12 meses + Pañal Etapa 4",
+      "Pijama enteriza 6 -12 meses + Pañal Etapa 4",
+      "Medias 3 - 6 meses y Gorros + Pañal Etapa 4",
+      "Medias 6 - 12 meses y Gorros + Pañal Etapa 4",
+      "Rodilleras + medias",
+      "Kit de baño + Pañitos",
+      "Kit de aseo + Pañitos",
+      "Termo 1.5Ltrs + Pañitos",
+      "Bañera o Tina plegable + Pañitos",
+      "Toalla y Termómetro + Pañitos",
+      "Toallas de Lactancia + Pañales etapa 0",
+      "Primera muda + Pañales etapa 1",
+      "Bodys 3-6 meses + Pañal Etapa 3",
+      "Bodys 3-6 meses + Pañal Etapa 3",
+      "Bodys 6-12 meses + Pañal Etapa 3",
+      "Bodys 6-12 meses + Pañal Etapa 3",
+      "Baberos en tela + Pañal Etapa 3",
+      "Babero recolector + Pañal Etapa 3",
+      "Pañalera tipo morral + Pañal Etapa 3",
+      "Conjunto 3 meses + Pañal Etapa 3",
+      "Conjunto 3 meses + Pañal Etapa 3",
+      "Conjunto 6 meses + Pañal Etapa 3",
+      "Conjunto 6 meses + Pañal Etapa 3",
+      "Conjunto 9 meses + Pañal Etapa 3",
+      "Conjunto 9 meses + Pañal Etapa 3",
+      "Sudadera 3 - 6 meses + Pañal Etapa 4",
+      "Sudadera 6 - 9 meses + Pañal Etapa 4",
+      "Ruana + Pañal etapa 4",
+      "Coche tipo maleta + Silla de carro",
+      "Cómoda Cambiador (puede ser regalo grupal)",
+      "Ropero Closet (puede ser regalo grupal)",
+      "Paseador",
+      "Móvil",
+      "Tapete Alfombra Plegable Reversible",
+      "Silla comedor",
+      "Cargador Silla Ergonómico",
+      "Set vajilla bebé silicona",
+      "Teteros",
+      "Vasenilla",
+      "Almohada antireflujo",
+      "Andadera",
+      "Fajeros + Camisas de valletilla 3 - 6 meses",
+      "Calentador Esterilizador Biberones",
+      "Fular"
+    ];
+
+    const giftList = document.getElementById("gift-list");
+
+    gifts.forEach((gift, index) => {
+      const card = document.createElement("div");
+      card.className = "gift-card";
+      card.innerHTML = `
+        <span>${gift}</span>
+        <button onclick="reserveGift(this, ${index})">Reservar</button>
+      `;
+      giftList.appendChild(card);
+    });
+
+    function reserveGift(button, index) {
+      const name = prompt("¿Cuál es tu nombre?");
+      if (name) {
+        const card = button.parentElement;
+        card.classList.add("reserved");
+        card.innerHTML = `<span>${gifts[index]}</span><span>Reservado por ${name}</span>`;
+      }
+    }
+  </script>
+
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://wa.me/573001234567?text=Hola,%20quiero%20confirmar%20mi%20asistencia%20al%20baby%20shower%20de%20Samuel%20💛🎉" target="_blank">
+        <button style="background-color: #25D366; font-size: 1rem;">Confirmar asistencia por WhatsApp 💬</button>
+      </a>
+    </div>
+    </body>
+    
+</html>
